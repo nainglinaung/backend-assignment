@@ -42,20 +42,6 @@ describe("Task Test Suite", () => {
             operationName: "DeleteList"
         });
 
-        const taskQuery = gql`
-        mutation DeleteTask($deleteTaskId: ID!) {
-            deleteTask(id: $deleteTaskId) {
-              success
-            }
-          }
-        `
-        await listServer.executeOperation({
-            query: taskQuery,
-            variables: { deleteTaskId: taskId },
-            operationName: "DeleteTask"
-        });
-
-
     })
 
     it('create new task from existing list"', async () => {
@@ -124,6 +110,27 @@ describe("Task Test Suite", () => {
         expect(response.data?.updateTask?.listId).toBe(listId);
 
     })
+
+    it("delete task by id", async () => {
+        const query = gql`
+        mutation DeleteTask($deleteTaskId: ID!) {
+            deleteTask(id: $deleteTaskId) {
+              success
+            }
+          }
+        `
+        const response = await taskServer.executeOperation({
+            query,
+            variables: { deleteTaskId: taskId },
+            operationName: "DeleteTask"
+        });
+
+        expect(response.errors).toBeUndefined();
+        expect(response.data?.deleteTask?.success).toBe(true);
+
+    })
+
+
 
 
 })
