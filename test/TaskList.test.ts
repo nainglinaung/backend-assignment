@@ -55,7 +55,7 @@ describe("List Test Suite", () => {
         id
         name
         Tasks {
-          name 
+          title 
         }
       }
     }
@@ -72,6 +72,29 @@ describe("List Test Suite", () => {
 
   })
 
+  it("change the name of list by id", async () => {
+    const query = gql`
+    mutation UpdateList($updateListId: ID!, $input: UpdateListInput!) {
+      updateList(id: $updateListId, input: $input) {
+        id
+        name
+      }
+    }`
+
+    const response = await testServer.executeOperation({
+      query,
+      variables: {
+        updateListId: listId, input: {
+          name: "new title"
+        }
+      },
+      operationName: "UpdateList"
+    });
+
+    expect(response.errors).toBeUndefined();
+    expect(response.data?.updateList?.name).toBe("new title");
+
+  })
 
 
   it('correctly delete list by id', async () => {
