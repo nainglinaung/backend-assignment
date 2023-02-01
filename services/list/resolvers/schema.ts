@@ -1,9 +1,20 @@
 import { gql } from 'apollo-server'
 
 export const typeDefs = gql`
+
+
+  type Task {
+    id: ID!
+    name: String!
+    description: String
+    position: Int
+    listId: String
+  }
+
   type List {
     id: ID!
     name: String!
+    Tasks: [Task]
   }
 
   input CreateListInput {
