@@ -8,7 +8,6 @@ let listServer: ApolloServer
 let listId: String
 let taskId: String
 
-
 describe("Task Test Suite", () => {
     beforeAll(async () => {
         taskServer = await createTaskServer()
@@ -68,6 +67,7 @@ describe("Task Test Suite", () => {
               title
               description
               listId
+              id
             }
           }
         `
@@ -91,5 +91,39 @@ describe("Task Test Suite", () => {
         expect(response.data?.createTask?.listId).toBe(listId);
 
     })
+
+    it('edit change the task title,status and description"', async () => {
+        const query = gql`
+        mutation UpdateTask($updateTaskId: ID!, $input: UpdateTaskInput!) {
+            updateTask(id: $updateTaskId, input: $input) {
+              id
+              title
+              description
+              position
+              listId
+              status
+            }
+          }
+          `
+
+        const response = await taskServer.executeOperation({
+            query,
+            variables: {
+                input: {
+                    title: "updated task",
+                    description: "updated description",
+                },
+                updateTaskId: taskId
+            },
+            operationName: "UpdateTask"
+        });
+
+        expect(response.errors).toBeUndefined();
+        expect(response.data?.updateTask?.title).toBe('updated task');
+        expect(response.data?.updateTask?.description).toBe("updated description");
+        expect(response.data?.updateTask?.listId).toBe(listId);
+
+    })
+
 
 })
