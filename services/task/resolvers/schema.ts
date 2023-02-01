@@ -20,6 +20,7 @@ export const typeDefs = gql`
     title: String
     description: String
     position: Int
+    status: String
   }
 
   type MutationResult {
