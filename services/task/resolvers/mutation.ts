@@ -7,7 +7,7 @@ export const mutation: Resolvers<Context>['Mutation'] = {
     ctx.prisma.task.update({
       where: { id },
       data: {
-        name: input.name ?? undefined,
+        title: input.title ?? undefined,
       },
     }),
 }

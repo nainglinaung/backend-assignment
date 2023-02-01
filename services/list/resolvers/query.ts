@@ -5,7 +5,7 @@ export const query: Resolvers<Context>['Query'] = {
   lists: async (_parent, _args, ctx) => ctx.prisma.list.findMany({
     include: {
       Tasks: {
-        select: { name: true, position: true, id: true }
+        select: { title: true, position: true, id: true }
       }
     }
   }),
