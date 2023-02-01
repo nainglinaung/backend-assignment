@@ -24,4 +24,14 @@ export const mutation: Resolvers<Context>['Mutation'] = {
         status: input.status ?? undefined
       },
     }),
+
+
+  deleteTask: async (_parent, { id }, ctx) => {
+    try {
+      await ctx.prisma.task.delete({ where: { id } });
+      return { success: true };
+    } catch (err) {
+      return { success: false };
+    }
+  },
 }
