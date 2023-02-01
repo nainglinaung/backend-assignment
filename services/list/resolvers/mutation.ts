@@ -14,6 +14,14 @@ export const mutation: Resolvers<Context>['Mutation'] = {
 
   deleteList: async (_parent, { id }, ctx) => {
     try {
+
+      await ctx.prisma.task.deleteMany({
+        where: {
+          listId: {
+            equals: id
+          }
+        }
+      })
       await ctx.prisma.list.delete({ where: { id } });
       return { success: true };
     } catch (err) {
