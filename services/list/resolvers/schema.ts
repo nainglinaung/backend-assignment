@@ -5,10 +5,11 @@ export const typeDefs = gql`
 
   type Task {
     id: ID!
-    name: String!
+    title: String!
     description: String
     position: Int
     listId: String
+    status: String
   }
 
   type List {
