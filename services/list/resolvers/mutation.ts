@@ -11,4 +11,21 @@ export const mutation: Resolvers<Context>['Mutation'] = {
         name: input.name ?? undefined,
       },
     }),
+
+  deleteList: async (_parent, { id }, ctx) => {
+    try {
+      await ctx.prisma.list.delete({ where: { id } });
+      return { success: true };
+    } catch (err) {
+      return { success: false };
+    }
+  },
 }
+
+
+// type Task {
+//   id: ID!
+//   name: String!
+//   description: String
+//   position: Int
+//   listId: String
