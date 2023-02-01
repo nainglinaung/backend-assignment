@@ -1,22 +1,15 @@
 import { ApolloServer, gql } from 'apollo-server'
-// import {assert} from "assert"
-import { resolvers } from '../services/list/resolvers'
-import { typeDefs } from '../services/list/resolvers/schema'
-
-
-import { createGqlServer } from '../libs/server'
+import { createListServer } from "./createListServer"
 
 
 let testServer: ApolloServer
 
 
 beforeAll(async () => {
-  testServer = await createGqlServer({
-    typeDefs,
-    resolvers,
-  });
-
+  testServer = await createListServer()
 })
+
+
 
 describe("List Test Suite", () => {
 
@@ -24,19 +17,21 @@ describe("List Test Suite", () => {
 
   it('create list with named "This is example list"', async () => {
 
+    //  const response = await createNewList()
+
     const query = gql`
-      mutation CreateList($input: CreateListInput!) {
-        createList(input: $input) {
-          name,id
+        mutation CreateList($input: CreateListInput!) {
+          createList(input: $input) {
+            name,id
+          }
         }
-      }
     `
+
     const response = await testServer.executeOperation({
       query,
       variables: { input: { name: 'This is example list' } },
       operationName: "CreateList"
     });
-
     expect(response.errors).toBeUndefined();
     expect(response.data?.createList?.name).toBe('This is example list');
 
