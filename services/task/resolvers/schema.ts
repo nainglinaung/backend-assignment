@@ -13,7 +13,6 @@ export const typeDefs = gql`
   input CreateTaskInput {
     title: String!
     description: String!
-    position: Int!
     listId: String!
   }
 
