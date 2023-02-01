@@ -16,6 +16,10 @@ export const typeDefs = gql`
     listId: String!
   }
 
+  input MoveTaskInput {
+    moveTo: String
+  }
+
   input UpdateTaskInput {
     title: String
     description: String
@@ -36,5 +40,6 @@ export const typeDefs = gql`
     createTask(input: CreateTaskInput!): Task!
     updateTask(id: ID!, input: UpdateTaskInput!): Task
     deleteTask(id: ID!): MutationResult!
+    moveTask(id: ID!, input: MoveTaskInput!): MutationResult!
   }
 `

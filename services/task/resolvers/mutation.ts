@@ -15,6 +15,35 @@ export const mutation: Resolvers<Context>['Mutation'] = {
   },
 
 
+  moveTask: async (_parent, { id, input }, ctx) => {
+
+    try {
+      let moveTo = input.moveTo ?? undefined
+
+      let moveToTask = await ctx.prisma.task.findUnique({ where: { id: moveTo } });
+      let currentTask = await ctx.prisma.task.findUnique({ where: { id }, });
+
+      let moveToLocation = moveToTask?.position ?? undefined
+      let currentLocation = currentTask?.position ?? undefined
+
+      await ctx.prisma.task.update({
+        where: { id }, data: {
+          position: moveToLocation
+        }
+      })
+
+      await ctx.prisma.task.update({
+        where: { id: moveTo }, data: {
+          position: currentLocation
+        }
+      })
+      return { success: true };
+    } catch (error) {
+      return { success: false }
+    }
+
+  },
+
   updateTask: async (_parent, { id, input }, ctx) =>
     ctx.prisma.task.update({
       where: { id },
