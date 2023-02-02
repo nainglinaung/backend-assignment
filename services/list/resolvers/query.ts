@@ -12,5 +12,10 @@ export const query: Resolvers<Context>['Query'] = {
   list: async (_parent, { id }, ctx) =>
     ctx.prisma.list.findUnique({
       where: { id },
+      include: {
+        Tasks: {
+          select: { title: true, position: true, id: true, status: true }
+        }
+      }
     }),
 }
