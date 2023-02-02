@@ -5,9 +5,18 @@ export interface Context {
   prisma: PrismaClient
 }
 
+
+let prisma: PrismaClient
+
+
 export function createContext(ctx: ExpressContext): Context {
+
+  if (prisma == null) {
+    prisma = new PrismaClient()
+  }
+
   return {
     ...ctx,
-    prisma: new PrismaClient(),
+    prisma
   }
 }
