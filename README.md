@@ -29,8 +29,8 @@ You will be getting involved on this! We have setting up user service to manage 
 
 Make sure you have these tools installed
 
-- Docker
-- Node.js
+- Docker 
+- Node.js (14.0 or higher)
 - Node package manager, preferably `pnpm`
 
 ### Setup
@@ -44,3 +44,14 @@ This is the instruction to setup this project and run in your local machine. Not
 5. Run `pnpm codegen` to generate TypeScript definition for GraphQL and Prisma client.
 6. Run `pnpm start` to start the project.
 7. Go to `http://localhost:4000`, you should see Apollo Playground with two queries `users` and `user`. You may change the port according to `GATEWAY_PORT` in your `.env` file.
+
+
+### Test 
+
+If you're using pnpm 
+
+```
+pnpm test 
+```
+
+
